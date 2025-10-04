@@ -1,16 +1,50 @@
-# React + Vite
+# Bucket List Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A **serverless web application** built with **React** and **AWS Amplify**.  
+The app allows users to **create, manage, and track** their personal bucket lists with **secure authentication**, **cloud storage**, and a **scalable backend**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Project Overview  
+This project showcases the design, development, and deployment of a full-stack serverless application on AWS. 
+It integrates a **React frontend**, a **GraphQL API** for data handling, and multiple **AWS services** for authentication, storage, and hosting.
 
-## React Compiler
+Source code for my Bucket List App also found here in repo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Steps Performed 
+- Designed and developed the **frontend** using **React**  
+- Set up a **GitHub repository** and configured **CI/CD** with **AWS Amplify Hosting**  
+- Implemented **user authentication** (Signup/Login) using **AWS Amplify Auth & Cognito**  
+- Built a **GraphQL API** with **AWS AppSync** and integrated **DynamoDB** for data storage  
+- Added **image upload functionality** using **Amazon S3**  
+- Deployed the **frontend and backend** seamlessly on **AWS Amplify**
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Tech Stack & Services Used  
+
+| **Category**     | **Technology / Service** |
+|------------------|---------------------------|
+| **Frontend**     | React, Amplify UI |
+| **Backend**      | AWS Amplify, AWS AppSync, GraphQL |
+| **Database**     | DynamoDB |
+| **Storage**      | Amazon S3 |
+| **Authentication** | AWS Amplify Auth (Cognito) |
+| **Deployment**   | AWS Amplify Hosting |
+
+---
+
+## Architectural Diagram
+This it the architectural diagram for the project:
+
+<img width="1607" height="731" alt="image" src="https://github.com/user-attachments/assets/c9e8720f-b894-43c6-a866-885133dbe729" />
+
+---
+
+## Final Results
+This is what your project will look like, once built:
+
+<img width="1867" height="963" alt="image" src="https://github.com/user-attachments/assets/937e9943-4a7b-42b8-9e14-dd3708e15855" />
+
