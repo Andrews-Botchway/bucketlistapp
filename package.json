@@ -10,9 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@aws-amplify/ui-react": "^6.13.0",
     "aws-amplify": "^6.15.7",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "tslib": "^2.8.1"
   },
   "devDependencies": {
     "@aws-amplify/backend": "^1.16.1",
