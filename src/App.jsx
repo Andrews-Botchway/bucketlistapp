@@ -13,90 +13,67 @@ import {
 } from "@aws-amplify/ui-react";
 import { Amplify } from "aws-amplify";
 import "@aws-amplify/ui-react/styles.css";
-import { getUrl } from "aws-amplify/storage";
-import { uploadData } from "aws-amplify/storage";
+import { getUrl, uploadData } from "aws-amplify/storage";
 import { generateClient } from "aws-amplify/data";
 import outputs from "../amplify_outputs.json";
+
 /**
  * @type {import('aws-amplify/data').Client<import('../amplify/data/resource').Schema>}
  */
-
-
 Amplify.configure(outputs);
-const client = generateClient({
-  authMode: "userPool",
-});
-
+const client = generateClient({ authMode: "userPool" });
 
 export default function App() {
   const [items, setItems] = useState([]);
-
+  const [preview, setPreview] = useState(null);
 
   useEffect(() => {
     fetchItems();
   }, []);
 
-
   async function fetchItems() {
     const { data: items } = await client.models.BucketItem.list();
-    await Promise.all(
+    const updatedItems = await Promise.all(
       items.map(async (item) => {
         if (item.image) {
-          const linkToStorageFile = await getUrl({
+          const url = await getUrl({
             path: ({ identityId }) => `media/${identityId}/${item.image}`,
           });
-          console.log(linkToStorageFile.url);
-          item.image = linkToStorageFile.url;
+          item.image = typeof url === "string" ? url : url.url;
         }
         return item;
       })
     );
-    console.log(items);
-    setItems(items);
+    setItems(updatedItems);
   }
-
 
   async function createItem(event) {
     event.preventDefault();
     const form = new FormData(event.target);
-    console.log(form.get("image").name);
-
+    const file = form.get("image");
 
     const { data: newItem } = await client.models.BucketItem.create({
       title: form.get("title"),
       description: form.get("description"),
-      image: form.get("image").name,
+      image: file ? file.name : null,
     });
 
-
-    console.log(newItem);
-    if (newItem.image)
+    if (file) {
       await uploadData({
-        path: ({ identityId }) => `media/${identityId}/${newItem.image}`,
-        data: form.get("image"),
-      }).result;
-
+        path: ({ identityId }) => `media/${identityId}/${file.name}`,
+        data: file,
+      });
+    }
 
     fetchItems();
     event.target.reset();
+    setPreview(null);
   }
-
 
   async function deleteItem({ id }) {
-    const toBeDeletedItem = {
-      id: id,
-    };
-
-
-    const { data: deletedItem } = await client.models.BucketItem.delete(
-      toBeDeletedItem
-    );
-    console.log(deletedItem);
-
-
+    await client.models.BucketItem.delete({ id });
     fetchItems();
   }
-
 
   return (
     <Authenticator>
@@ -106,17 +83,20 @@ export default function App() {
           justifyContent="center"
           alignItems="center"
           direction="column"
-          width="70%"
+          width="90%"
           margin="0 auto"
+          padding="2rem"
         >
-          <Heading level={1}>My Bucket List</Heading>
-          <View as="form" margin="3rem 0" onSubmit={createItem}>
-            <Flex
-              direction="column"
-              justifyContent="center"
-              gap="2rem"
-              padding="2rem"
-            >
+          <Flex width="100%" justifyContent="space-between" alignItems="center">
+            <Heading level={1}>My Bucket List</Heading>
+            <Button onClick={signOut} variation="link">
+              Sign Out
+            </Button>
+          </Flex>
+
+          {/* Form */}
+          <View as="form" margin="2rem 0" onSubmit={createItem} width="100%">
+            <Flex direction="column" gap="1.5rem">
               <TextField
                 name="title"
                 placeholder="Bucket List Item"
@@ -134,61 +114,88 @@ export default function App() {
                 required
               />
               <View
-                name="image"
                 as="input"
                 type="file"
-                alignSelf={"end"}
+                name="image"
                 accept="image/png, image/jpeg"
+                onChange={(e) =>
+                  setPreview(e.target.files[0] && URL.createObjectURL(e.target.files[0]))
+                }
               />
-
-
+              {preview && (
+                <Image
+                  src={preview}
+                  alt="Preview"
+                  style={{ width: 200, borderRadius: "8px" }}
+                />
+              )}
               <Button type="submit" variation="primary">
                 Add to Bucket List
               </Button>
             </Flex>
           </View>
+
           <Divider />
-          <Heading level={2}>My Bucket List Items</Heading>
+
+          {/* Bucket List Items */}
+          <Heading level={2} margin="2rem 0">
+            My Bucket List Items
+          </Heading>
           <Grid
-            margin="3rem 0"
-            autoFlow="column"
-            justifyContent="center"
-            gap="2rem"
-            alignContent="center"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+              gap: "2rem",
+              width: "100%",
+            }}
           >
             {items.map((item) => (
               <Flex
                 key={item.id || item.title}
                 direction="column"
-                justifyContent="center"
                 alignItems="center"
-                gap="2rem"
-                border="1px solid #ccc"
-                padding="2rem"
-                borderRadius="5%"
+                gap="1rem"
+                padding="1.5rem"
+                borderRadius="1rem"
                 className="box"
+                style={{
+                  background: "rgba(255,255,255,0.9)",
+                  border: "1px solid rgba(0,0,0,0.08)",
+                  boxShadow: "0 4px 6px rgba(0,0,0,0.05)",
+                  position: "relative",
+                  overflow: "hidden",
+                  transition: "transform 0.4s ease, box-shadow 0.4s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-8px) scale(1.03)";
+                  e.currentTarget.style.boxShadow = "0 10px 30px rgba(0,0,0,0.15)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0) scale(1)";
+                  e.currentTarget.style.boxShadow = "0 4px 6px rgba(0,0,0,0.05)";
+                }}
               >
-                <View>
-                  <Heading level="3">{item.title}</Heading>
-                </View>
-                <Text fontStyle="italic">{item.description}</Text>
+                <Heading level={3}>{item.title}</Heading>
+                <Text fontStyle="italic" color="#666">
+                  {item.description}
+                </Text>
                 {item.image && (
                   <Image
                     src={item.image}
                     alt={`Visual for ${item.title}`}
-                    style={{ width: 400 }}
+                    style={{ width: "100%", borderRadius: "8px" }}
                   />
                 )}
                 <Button
                   variation="destructive"
                   onClick={() => deleteItem(item)}
+                  style={{ marginTop: "1rem" }}
                 >
                   Delete Item
                 </Button>
               </Flex>
             ))}
           </Grid>
-          <Button onClick={signOut}>Sign Out</Button>
         </Flex>
       )}
     </Authenticator>
