@@ -54,22 +54,18 @@ The app enables users to **create, manage, and track** personal bucket lists wit
 ## Architectural Diagram
 This it the architectural diagram for the project:
 
-<img width="1607" height="731" alt="image" src="https://github.com/user-attachments/assets/c9e8720f-b894-43c6-a866-885133dbe729" />
-
+![alt text](image1.png)
 ---
 
 ## Final Results
 This is what your project will look like, once built:
 
-<img width="2559" height="1401" alt="Screenshot 2025-10-04 at 14 00 28" src="https://github.com/user-attachments/assets/5f111133-3f91-4897-995e-ec81067727cb" />
-
+![alt text](image2.png)
 ---
 
-<img width="2556" height="1399" alt="Screenshot 2025-10-04 at 14 07 53" src="https://github.com/user-attachments/assets/f81ac08b-d031-437c-bf8a-c3ed5d507d84" />
-
+![alt text](image4.png)
 ---
 
-<img width="1702" height="372" alt="Screenshot 2025-10-04 at 14 10 25" src="https://github.com/user-attachments/assets/48de3bf8-50fa-4b2e-9942-4ceaee978361" />
-
+![alt text](image5.png)
 
 
