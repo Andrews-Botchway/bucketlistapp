@@ -9,8 +9,6 @@ The app allows users to **create, manage, and track** their personal bucket list
 This project showcases the design, development, and deployment of a full-stack serverless application on AWS. 
 It integrates a **React frontend**, a **GraphQL API** for data handling, and multiple **AWS services** for authentication, storage, and hosting.
 
-Source code for my Bucket List App also found here in repo
-
 ---
 
 ## Steps Performed 
@@ -46,5 +44,15 @@ This it the architectural diagram for the project:
 ## Final Results
 This is what your project will look like, once built:
 
-<img width="1867" height="963" alt="image" src="https://github.com/user-attachments/assets/937e9943-4a7b-42b8-9e14-dd3708e15855" />
+<img width="2559" height="1401" alt="Screenshot 2025-10-04 at 14 00 28" src="https://github.com/user-attachments/assets/5f111133-3f91-4897-995e-ec81067727cb" />
+
+---
+
+<img width="2556" height="1399" alt="Screenshot 2025-10-04 at 14 07 53" src="https://github.com/user-attachments/assets/f81ac08b-d031-437c-bf8a-c3ed5d507d84" />
+
+---
+
+<img width="1702" height="372" alt="Screenshot 2025-10-04 at 14 10 25" src="https://github.com/user-attachments/assets/48de3bf8-50fa-4b2e-9942-4ceaee978361" />
+
+
 
